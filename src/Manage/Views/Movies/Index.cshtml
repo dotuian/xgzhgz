@@ -1,0 +1,91 @@
+﻿@{ 
+// APS.NET MVC提供了利用强类型的方法来将数据或对象传递到试图模板中。
+// 这种强类型的方法为在编码过程中提供了很丰富的编辑提示和编译检查。
+
+//IEnumerable公开枚举器，该枚举器支持在指定类型的集合上进行简单迭代
+
+//@model关键字允许我们在视图模板中直接访问在控制器类中通过使用强类型的“模型”而传递过来的对象列表
+}
+
+@model IEnumerable<Manage.Models.Movie>
+
+
+@{
+    ViewBag.Title = "测试首页";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+
+<table>
+    <!--
+       变量使用 var 关键字声明，或通过使用类型（如果您想声明类型）声明，但是 ASP.NET 通常能自动确定数据类型。 
+    -->
+    @foreach (var user in ViewBag.Users) { 
+    <tr>
+        <td>
+            @DateTime.Now
+        </td>
+    </tr>
+    }
+</table>
+
+
+<ul>
+@for (int i = 0; i < ViewBag.Times; i++) {
+    <li>@ViewBag.Message</li>
+}
+</ul>
+
+
+<!--
+若要呈现视图，则可以调用控制器的 View 方法.
+若要向视图传递数据，则可以使用 ViewPage 类的 ViewData 属性。
+
+
+-->

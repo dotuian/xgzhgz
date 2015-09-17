@@ -1,0 +1,152 @@
+﻿@model Manage.Models.CreateUserViewModel
+
+
+@{
+    ViewBag.Title = "添加用户";
+
+    // 禁止生成客户端验证代码
+    Html.EnableClientValidation(false);
+}
+
+<h2>添加用户</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Movie</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- 用户名 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 密码 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 邮箱 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 状态 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.User.Status, new SelectList(new[] { "激活", "未激活" }), new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.User.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 性别 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(model => model.User.Sex, "M", new { id = "SEX_M" })男 
+                </label>
+                <label class="radio-inline">
+                    @Html.RadioButtonFor(model => model.User.Sex, "F", new { id = "SEX_F" })女
+                </label>
+                @Html.ValidationMessageFor(model => model.User.Sex, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 出生年月 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Birthday, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Birthday, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 电话号码 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Telephone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Telephone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 运营商 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Carrier, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @foreach (var kv in Model.CarriersList)
+                {
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(model => model.User.Carrier, kv.Code)
+                        @kv.Name
+                    </label>
+                }
+
+                @Html.ValidationMessageFor(model => model.User.Carrier, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <!-- 兴趣爱好 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Hobbies, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.CheckBoxListFor(model => model.User.Hobbies,  // 
+                      model => model.AvailableHobbies,       // List<City>()
+                      model => model.Code,                   // Hobby.Code
+                      model => model.Name,                   // Hobby.Name
+                      model => model.SelectedHobbies)        
+
+                @Html.ValidationMessageFor(model => model.User.Hobbies, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <!-- 备注 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Memo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Memo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Memo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

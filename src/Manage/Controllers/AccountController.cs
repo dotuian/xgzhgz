@@ -57,6 +57,14 @@ namespace Manage.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            // ViewData是在ControllerBase中类型为dynamic的属性,是name/value形式的字典。dynamic类型是C# 4.0推出的一个类型，它使得在编译期不需要指明类型。
+            //● 如果传递的是"小数据",我们想到ViewBag, ViewData。
+            //● 如果基于View的Model，我们想到针对该View设计View Model。
+            //● 如果视图的某个部分需要被重复使用，就把之提炼出来，成为一个Partial View。
+            //● 当需要跨controller，跨action传递，我们想到TempData。
+            //● 如果传递的是"小数据"，又不想使用View Model，可以考虑Tuple。
+
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

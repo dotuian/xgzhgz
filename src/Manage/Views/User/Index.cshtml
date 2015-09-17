@@ -1,0 +1,74 @@
+﻿@{
+    // 页面名称
+    ViewBag.Title = "用户首页";
+}
+
+<h2>用户</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+
+    @for (var i = 1; i < 10; i++)
+    {
+        <tr>
+            <th>
+                @i
+            </th>
+            <th>
+                @DateTime.Now
+            </th>
+            <th>
+                @{
+                    var msg = "Hello, World. ";
+                }
+                @msg
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+                    }
+</table>
+
+<ul>
+    @foreach (var v in Request.ServerVariables)
+    {
+        <!-- <li>@v</li> -->
+    }
+</ul>
+
+<!--
+Razor 是一种将服务器代码嵌入在网页中的简单的编程语法。
+Razor 语法是基于 ASP.NET 框架，专门用于创建 Web 应用程序的部分 Microsoft.NET 框架。
+Razor 语法支持所有 ASP.NET 的功能，但是使用的是一种简化语法，对初学者而言更容易学习，对专家而言更有效率的。
+Razor 网页可以被描述成带一下两种类型内容的 HTML 网页： HTML 内容和 Razor 代码。
+当服务器读取页面时，它首先运行 Razor 代码，然后再发送 HTML 页面到浏览器。在服务器上执行的代码能够执行一些在浏览器上不能完成的任务，比如，访问服务器数据库。服务器代码能创建动态的 HTML 内容，然后发送到浏览器。从浏览器上看，服务器代码生成的 HTML 与静态的 HTML 内容没有什么不同。
+带 Razor 语法的 ASP.NET 网页有特殊的文件扩展名 cshtml（Razor C#）或者 vbhtml（Razor VB）。
+-->
+
+@{
+    var weekday = DateTime.Now.DayOfWeek;
+    var day = weekday.ToString();
+    string message = "";
+}
+@switch (day)
+{
+    case "Monday":
+        message = "This is the first weekday.";
+        break;
+    case "Thursday":
+        message = "Only one day before weekend.";
+        break;
+    case "Friday":
+        message = "Tomorrow is weekend!";
+        break;
+    default:
+        message = "Today is " + day;
+        break;
+}
+<p>@message</p>
