@@ -10,28 +10,54 @@ namespace Manage.Controllers
 {
     public class UserController : Controller
     {
+        private MovieDBContext db = new MovieDBContext();
+
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return View("Index", db.Users.ToList());
         }
 
+        [HttpGet]
+        [ActionName("Create")] // 给Action方法定义别名
+        public ActionResult Create() {
 
-        public ActionResult Create(UserModel user)
-        {
-            // 页面表示用Model
-            var model = new CreateUserViewModel();
+            CreateUserViewModel model = this.initCreatePage(null);
 
             // 测试用的User数据
-            //User user = new Models.User();
+            UserModel user = new UserModel();
             user.UserName = "dotuian";
             user.Password = "test1234";
-            user.Birthday = DateTime.Now;
+            user.Birthday = DateTime.Now.ToString("yyyy-MM-dd");
             user.Email = "dotuian@outlook.com";
             user.Telephone = "080-9155-2781";
             user.Memo = "memo";
             model.User = user;
 
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Create(UserModel user)
+        {
+            CreateUserViewModel model = this.initCreatePage(user);
+
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+
+        private CreateUserViewModel initCreatePage(UserModel user) {
+            // 页面表示用Model
+            var model = new CreateUserViewModel();
+
+            model.User = user;
 
             // 可供选择数据
             IList<Hobby> AvailableHobbies = new List<Hobby> {
@@ -45,7 +71,8 @@ namespace Manage.Controllers
             model.AvailableHobbies = AvailableHobbies;
 
             IList<Hobby> SelectedHobbies = new List<Hobby>();
-            if (user.Hobbies != null) {
+            if (user!= null && user.Hobbies != null)
+            {
                 foreach (string code in user.Hobbies)
                 {
                     for (int i = 0; i < AvailableHobbies.Count; i++)
@@ -68,7 +95,7 @@ namespace Manage.Controllers
 
             model.CarriersList = CarriersList;
 
-            return View(model);
+            return model;
         }
 
 

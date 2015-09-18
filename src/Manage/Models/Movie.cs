@@ -31,7 +31,7 @@ namespace Manage.Models
     public class MovieDBContext : DbContext
     {
         public DbSet<Movie> Movies { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserModel> Users { get; set; }
     }
 
 }

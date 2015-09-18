@@ -1,24 +1,57 @@
-﻿@model Manage.Models.CreateUserViewModel
+﻿<!--
+    Razor语句都是以@符号开始的。每个视图都有自己的Model属性（通过＠Model调用）。    
+
+    ＠model Manage.Models.CreateUserViewModel    
+    这句话的意思是: 将本试图中的Model属性的类型指向 Manage.Models.CreateUserViewModel 类型，这就实现了强类型
+
+    强类型的好处之一是类型安全，如果写错了Model对象的某个成员名，编译器会报错。另一个好处是代码提示
+
+    声名Model属性类型用的是 ＠model <Model类型名>(小写m)，而调用控制器传递过来的Model对象用的是@Model.<属性名>(大写M)
+-->
+@model Manage.Models.CreateUserViewModel
 
 
 @{
     ViewBag.Title = "添加用户";
 
     // 禁止生成客户端验证代码
-    Html.EnableClientValidation(false);
+    //Html.EnableClientValidation(false);
+    HtmlHelper.ClientValidationEnabled = false;
+
+    //通过设置Layout为空，可以取消布局模板的渲染
+    //Layout = null;
 }
 
 <h2>添加用户</h2>
 
+<!--
+    使用＠:和text标签
+    在代码块中，要么是C#代码，要么是HTML标签，不能直接写纯文字，纯文字须包裹在HTML标签内。
+
+    但如果需要在代码块中直接输出纯文字而不带HTML标签，则可以使用 ＠: 标签，在代码块中输出纯文本文字非常有用。
+
+    使用＠:标签在代码块中输出一行不带html标签的文本非常方便，但如果需要在代码块中输出续或不连续的多行纯文本，则使用text标签较为方便，如下代码所示：
+
+-->
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Movie</h4>
+        <h4>添加用户</h4>
+        
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-warning" })
+        <!--  
+            1. Html.ValidationSummary(bool)
+               当参数为true时，只显示Model级的验证消息（如果 ModelState.AddModelError 方法的第一个参数没有指定属性名称，则为Model级的）
+            2. Html.ValidationSummary(string)
+               为所有的验证消息显示一个标题
+            3. Html.ValidationSummary(bool, string)
+               前两个的结合    
+        -->
+
 
         <!-- 用户名 -->
         <div class="form-group">
@@ -35,6 +68,15 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.User.Password, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 确认密码 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -67,6 +109,7 @@
                 <label class="radio-inline">
                     @Html.RadioButtonFor(model => model.User.Sex, "F", new { id = "SEX_F" })女
                 </label>
+                <br/>
                 @Html.ValidationMessageFor(model => model.User.Sex, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -89,10 +132,23 @@
             </div>
         </div>
 
+        <!-- 家庭地址 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.HomeAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.HomeAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.HomeAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <!-- 运营商 -->
         <div class="form-group">
             @Html.LabelFor(model => model.User.Carrier, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+
+                @{ 
+                    // 直接调用Controller传递过来的Model，使用 "Model.属性" 的形式
+                }
 
                 @foreach (var kv in Model.CarriersList)
                 {
@@ -101,7 +157,7 @@
                         @kv.Name
                     </label>
                 }
-
+                <br/>
                 @Html.ValidationMessageFor(model => model.User.Carrier, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -134,11 +190,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-primary btn-sm" />
             </div>
         </div>
 
     </div>
+
 }
 
 <div>
