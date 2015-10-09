@@ -114,6 +114,24 @@
             </div>
         </div>
 
+        <!-- 角色 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Role, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- 国家 -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User.Country, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User.Country, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <!-- 出生年月 -->
         <div class="form-group">
             @Html.LabelFor(model => model.User.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })

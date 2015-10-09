@@ -1,0 +1,33 @@
+﻿<!-- Enum类型数据通用的下拉列表选择框模板 -->
+@model Enum
+
+<!--
+    Enum.GetName(type, value)： 通过value返回type中的字符串
+-->
+@Html.DropDownListFor(m => m, Enum.GetValues(Model.GetType()).Cast<Enum>()
+    .Select(m =>
+    {
+        string enumVal = Enum.GetName(Model.GetType(), m);
+        return new SelectListItem()
+        {
+            Selected = (Model.ToString() == enumVal),
+            Text = enumVal,         // Enum中的表示字符串
+            Value = m.ToString("d") // Enum中的值
+        };
+    }),
+    new { @class = "form-control" }
+)
+
+<!--
+    使用方法，在Model中定义属性时，通过特性 [UIHint("Enum")] 来标注
+
+
+    MVC 是根据属性的类型在 /Views/Shared/EditorTemplates 目录下找自定义的模板的，
+    所以一定要保证模板的文件名和属性类型名一致（或用UIHint特性指定为模板的名称）。
+
+
+    如果自定义的模板和内置的模板同名，MVC会使用自定义的。可以根据这个特点来用自定义的模板替换系统内置的。
+    例如，如果在 EditorTemplates 文件夹下创建一个 Boolean.cshtml，
+    当MVC要为 Boolean 类型的属性呈现 Html 元素时，它会使用自定义的 Boolean.cshtml 分部视图来呈现。
+
+-->

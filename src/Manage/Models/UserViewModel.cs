@@ -43,9 +43,14 @@ namespace Manage.Models
         [Sex(ErrorMessage = "请输入选择正确的性别！")]
         public string Sex { get; set; }
 
+        [DisplayName("角色")]
+        public Role Role { get; set; }
+
+        [UIHint("EnumDropDownList")] //通过 UIHint 指定要EditorFor渲染该字段的模板文件名（Views/Shared/EditorTemplates）
+        [DisplayName("国家")]
+        public Country Country { get; set; }
+
         [DisplayName("出生日期")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [PastDate(ErrorMessage = "请输入过去的日期！")] // 过去的日期
         public string Birthday { get; set; }
 
@@ -118,6 +123,10 @@ namespace Manage.Models
     public enum Status
     {
         激活, 未激活
+    }
+
+    public enum Country {
+        中国, 日本, 美国
     }
 
 

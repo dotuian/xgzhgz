@@ -60,5 +60,13 @@
 
     <!-- 布局页面还有节（Section）的概念，也就是说，如果某个视图模板中定义了一个节，那么可以把它单独呈现出来 -->
     @RenderSection("scripts", required: false)
+
+    <!-- Section只能运行于当前所在的View或者模板视图中，可以通过 IsSectionDefined 方法来判断 section 是否有定义 -->
+    @if (IsSectionDefined("Header")) {
+        @RenderSection("Header")
+    }
+
+    @RenderSection("Footer", false)
+
 </body>
 </html>

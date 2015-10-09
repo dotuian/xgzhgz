@@ -10,6 +10,12 @@ namespace Manage.Controllers
     {
         public ActionResult Index()
         {
+            string[] names = { "Apple", "Orange", "Pear" };
+            return View(names);
+        }
+
+        public ActionResult List() {
+
             return View();
         }
 
@@ -26,5 +32,12 @@ namespace Manage.Controllers
 
             return View();
         }
+
+        //[ChildActionOnly]
+        public ActionResult Time() {
+            return PartialView(DateTime.Now);
+            //return View(DateTime.Now);
+        }
+
     }
 }

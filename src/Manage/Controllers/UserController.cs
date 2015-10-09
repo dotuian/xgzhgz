@@ -37,6 +37,21 @@ namespace Manage.Controllers
             return View(model);
         }
 
+
+        // http://www.cnblogs.com/willick/p/3424188.html
+        //MVC 框架内置默认的 Model Binder 是 DefaultModelBinder 类。当 Action Invoker 没找到自定义的 Binder 时，则默认使用 DefaultModelBinder。默认情况下，DefaultModelBinder 从如下 4 种途径查找要绑定到 Model 上的值：
+
+        //Request.Form，HTML form 元素提供的值。
+        //RouteData.Values，通过应用程序路由提供的值。
+        //Request.QueryString，所请求 URL 的 query string 值。
+        //Request.Files，客户端上传的文件。
+        //DefaultModelBinder 按照该顺序来查找需要的值。如对于上面的例子，DefaultModelBinder 会按照如下顺序为 id 参数查找值：
+
+        //Request.Form["id"]
+        //RouteData.Values["id"]
+        //Request.QueryString["id"]
+        //Request.Files["id"]
+        //一旦找到则停止查找。
         [HttpPost]
         public ActionResult Create(UserModel user)
         {
