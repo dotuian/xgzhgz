@@ -125,6 +125,11 @@ namespace Manage.Models
         激活, 未激活
     }
 
+    public enum Role
+    {
+        Admin, User, Guest
+    }
+
     public enum Country {
         中国, 日本, 美国
     }

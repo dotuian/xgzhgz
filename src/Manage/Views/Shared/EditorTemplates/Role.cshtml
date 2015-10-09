@@ -1,12 +1,14 @@
 ﻿<!-- MVC框架会在 /Views/Shared/EditorTemplates 文件夹下查找自定义的模板 -->
 
 <!-- 定义该页面的Model为 Manage.Models.Role 类型 -->
-@model Manage.Models.Role
+@model Manage.Models.Role?
 
 <!-- 定义下拉列表的显示 -->
 @Html.DropDownListFor(m => m, new SelectList(Enum.GetNames(Model.GetType()), Model.ToString()), new { @class = "form-control" })
 
 <!--
+    
+
     通用的Role下拉列表
 
     在Model中，相应的字段定义成 Role 类型，
